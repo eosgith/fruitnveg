@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+
+<div class="generic-container" ng-controller="ProduceTypeController as typeCtrl">
+    <div class="panel panel-default">
+        <div class="panel-heading"><span class="lead">Produce Type Add Form </span></div>
+        <div class="formcontainer">
+            <form ng-submit="typeCtrl.submit()" name="myForm" class="form-horizontal">
+                <input type="hidden" ng-model="typeCtrl.produceType.id" />
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="ptype">Produce Type</label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="typeCtrl.produceType.prodType" id="ptype" class="produceTypeprodType form-control input-sm" placeholder="Enter produce type e.g. Carrots, Potatoes" required ng-minlength="3"/>
+                            <div class="has-error" ng-show="myForm.$dirty">
+                                <span ng-show="myForm.ptype.$error.required">This is a required field</span>
+                                <span ng-show="myForm.ptype.$error.minlength">Minimum length required is 3</span>
+                                <span ng-show="myForm.ptype.$invalid">This field is invalid </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="description">Description</label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="typeCtrl.produceType.description" id="description" class="form-control input-sm" placeholder="Enter description of produce type. [This field is validation free]"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="weight">Photo Link</label>
+                        <div class="col-md-7">
+                            <input type="number" ng-model="typeCtrl.produceType.photolink" id="weight" class="weightCls form-control input-sm" placeholder="" />
+                            <!--                        <div class="has-error" ng-show="myForm.$dirty">
+                                                        <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                                        <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+                            
+                                                    </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-actions floatRight">
+                        <input type="submit"  value="{{!typeCtrl.produceType.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                        <button type="button" ng-click="typeCtrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
+                    </div>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><span class="lead">List of Produce Items </span>
+            <button type="button" ng-click="typeCtrl.fetchAllProduceTypes()" class="btn btn-primary btn-sm " ">Display All</button>
+            <label for="searchPType">Search for Produce Type</label>
+            <input type="text" ng-model="search.prodType" id="searchPType" placeholder="Type produce type"/>
+        </div>
+        <div class="row">
+
+        </div>
+
+        <div class="tablecontainer">
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <!--                              <th>ID.</th>-->
+                        <th>Produce Type</th>
+                        <th>Description</th>
+                        <th width="100"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="u in typeCtrl.produceTypes | filter: search">
+                        <!--                              <td><span ng-bind="u.id"></span></td>-->
+
+                        <td><span ng-bind="u.prodType"></span></td>
+                        <td><span ng-bind="u.description"></span></td>
+                        <td>
+                            <button type="button" ng-click="typeCtrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="typeCtrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+

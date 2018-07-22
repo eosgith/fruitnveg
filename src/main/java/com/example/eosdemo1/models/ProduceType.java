@@ -16,14 +16,14 @@ public class ProduceType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)    //JPA entity annotation : database will auto generate primary key of id
 
     // @javax.persistence.Id
-    Long id;
-    String prodType;
-    String description;
-    String photoLink;
+    private Long id;
+    private String prodType;
+    private String description;
+    private String photoLink;
 
-    @OneToMany(mappedBy = "producetype")   // "producetype" is name of java field in java class of ProduceItem. IN @JOIN_TO field, same attribute field is refereed to using SQL file field name: "TYPE_ID". Name use in to classes must be different though referring to the same attribute field/column in ProduceItem table/class
-    private Set<ProduceItem> prodItems = new HashSet<ProduceItem>();
-    
+//    @OneToMany(mappedBy = "producetype")   // "producetype" is name of java field in java class of ProduceItem. IN @JOIN_TO field, same attribute field is refereed to using SQL file field name: "TYPE_ID". Name use in to classes must be different though referring to the same attribute field/column in ProduceItem table/class
+//    private Set<ProduceItem> prodItems = new HashSet<ProduceItem>();
+//    
     public ProduceType() {
     }
 
@@ -68,21 +68,28 @@ public class ProduceType {
         this.photoLink = photoLink;
     }
 
-    public Set<ProduceItem> getProdItems() {
-        return prodItems;
-    }
+//    public Set<ProduceItem> getProdItems() {
+//        return prodItems;
+//    }
+//
+//    public void setProdItems(Set<ProduceItem> prodItems) {
+//        this.prodItems = prodItems;
+//    }
+//
+//    public void addProdItem(ProduceItem produceItem){
+//        this.prodItems.add(produceItem);
+//    }
+//    @Override
+//    public String toString() {
+//        return "ProduceType{" + "id=" + id + ", produceType=" + prodType + ", description=" + description + ", photoLink=" + photoLink + '}';
+//    }
 
-    public void setProdItems(Set<ProduceItem> prodItems) {
-        this.prodItems = prodItems;
-    }
-
-    public void addProdItem(ProduceItem produceItem){
-        this.prodItems.add(produceItem);
-    }
     @Override
     public String toString() {
-        return "ProduceType{" + "id=" + id + ", produceType=" + prodType + ", description=" + description + ", photoLink=" + photoLink + '}';
+        return "ProduceType{" + "id=" + id + ", prodType=" + prodType + ", description=" + description + ", photoLink=" + photoLink + '}';
     }
+    
+    
 
     
     

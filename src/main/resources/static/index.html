@@ -4,15 +4,256 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
-    <head>
-        <title>EOS Demo WEB app</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+    <head>  
+        <title>Local Fruit 'N Veg Direct</title>  
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="_csrf" content="${_csrf.token}"/>
+        <!-- default header name is X-CSRF-TOKEN -->
+        <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+        <style>
+            .produceItemname.ng-valid {
+                background-color: lightgreen;
+            }
+            .produceItemname.ng-dirty.ng-invalid-required {
+                background-color: red;
+            }
+            .produceItemname.ng-dirty.ng-invalid-minlength {
+                background-color: yellow;
+            }
+
+            .email.ng-valid {
+                background-color: lightgreen;
+            }
+            .email.ng-dirty.ng-invalid-required {
+                background-color: red;
+            }
+            .email.ng-dirty.ng-invalid-email {
+                background-color: yellow;
+            }
+
+            .weightCls.ng-valid {
+                background-color: lightgreen;
+            }
+            .weightCls.ng-dirty.ng-invalid-required {
+                background-color: red;
+            }
+
+            .eofsdate.ng-valid {
+                background-color: lightgreen;
+            }
+            .eofsdate.ng-dirty.ng-invalid-required {
+                background-color: red;
+            }
+            .eofsdate.ng-dirty.ng-invalid-date {
+                background-color: yellow;
+            }
+
+        </style>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <!--<link rel="stylesheet" href="app.css">-->
+        <link rel="stylesheet" href="css/style.min.css">
     </head>
-    <body>
-        <div>TODO write content
-            <p><a  href="hello" role="button">Click Here! </a></p>
+
+    <body ng-app="myApp" class="ng-cloak">
+<!--        <div class="generic-container" ng-controller="ProduceItemController as ctrl">-->
+        <div class="generic-container" >
+            <!-- Main jumbotron for a primary marketing message or call to action -->
+            <div class="jumbotron">
+                <div class="container text-center">
+                    <h2>Local Fruit 'N Veg Direct</h2>
+
+                </div>
+            </div>
+
+
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>                        
+                        </button>
+                        <a class="navbar-brand" href="#">Local Fruit 'N Veg Direct</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Page 1-1</a></li>
+                                    <li><a href="#">Page 1-2</a></li>
+                                    <li><a href="#">Page 1-3</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#/produceItemVA">Add Produce Item</a></li>
+                            <li><a href="#/produceTypeVA">Produce Types</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+<!--       <input type="submit"  value="{{!typeCtrl.produceType.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">-->
+
+                            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container text-center ">
+                <img src="/images/fruitandveg.jpg" class="img-rounded img-thumbnail img-responsive" width="304" height="236"/>
+                <img src="/images/gardenvegplot2.jpg" class="img-rounded img-thumbnail img-responsive" width="304" height="236"/>
+            </div>
+
+<!--            <div class="panel panel-default">
+                <h2>Local Fruit 'N Veg Direct</h2>
+                <ul>
+                    <li><a href="#/">Default Route</a></li>
+                    <li><a href="#/test">index2 page</a></li>
+
+                    <li><a href="#/blabla">Unknown Route</a></li>
+                </ul>
+
+            </div>-->
+            <div ng-view></div>
+            <!--            <div class="panel panel-default">
+                            <div class="panel-heading"><span class="lead">Produce Item Add Form </span></div>
+                            <div class="formcontainer">
+                                <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+                                    <input type="hidden" ng-model="ctrl.produceItem.id" />
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-2 control-lable" for="uname">Product Name</label>
+                                            <div class="col-md-7">
+                                                <input type="text" ng-model="ctrl.produceItem.name" id="uname" class="produceItemname form-control input-sm" placeholder="Enter product item name" required ng-minlength="3"/>
+                                                <div class="has-error" ng-show="myForm.$dirty">
+                                                    <span ng-show="myForm.uname.$error.required">This is a required field</span>
+                                                    <span ng-show="myForm.uname.$error.minlength">Minimum length required is 3</span>
+                                                    <span ng-show="myForm.uname.$invalid">This field is invalid </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-2 control-lable" for="address">Description</label>
+                                            <div class="col-md-7">
+                                                <input type="text" ng-model="ctrl.produceItem.description" id="description" class="form-control input-sm" placeholder="Enter description of produce item. [This field is validation free]"/>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-2 control-lable" for="weight">Weight (kgs)</label>
+                                            <div class="col-md-7">
+                                                <input type="number" ng-model="ctrl.produceItem.weight" id="weight" class="weightCls form-control input-sm" placeholder="Enter weight of package of produce item. " required />
+                                                <div class="has-error" ng-show="myForm.$dirty">
+                                                    <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                                    <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+            
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-2 control-lable" for="eofsdate">End of Sale Date </label>
+                                            <div class="col-md-7">
+                                                <input type="date" ng-model="ctrl.produceItem.endOfSaleDate" id="eofsdate" class="eofsdate form-control input-sm" placeholder="Enter weight of package of produce item. " required ng-date />
+                                                <div class="has-error" ng-show="myForm.$dirty">
+                                                    <span ng-show="myForm.eofsdate.$error.required">This is a required field</span>
+                                                    <span ng-show="myForm.eofsdate.$error.date">This is a required field</span>
+                                                    <span ng-show="myForm.eofsdate.$invalid">This field is invalid </span>
+            
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-2 control-lable" for="email">Email</label>
+                                            <div class="col-md-7">
+                                                <input type="email" ng-model="ctrl.produceItem.email" id="email" class="email form-control input-sm" placeholder="Enter your Email" required/>
+                                                <div class="has-error" ng-show="myForm.$dirty">
+                                                    <span ng-show="myForm.email.$error.required">This is a required field</span>
+                                                    <span ng-show="myForm.email.$invalid">This field is invalid </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row">
+                                        <div class="form-actions floatRight">
+                                            <input type="submit"  value="{{!ctrl.produceItem.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                                            <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                             Default panel contents 
+                            <div class="panel-heading"><span class="lead">List of Produce Items </span></div>
+                            <div class="tablecontainer">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                                                          <th>ID.</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Produce Type</th>
+                                            <th>Weight (Kgs) </th>
+                                            <th>End of Sale Date</th>
+                                            <th>Name of Seller</th>
+                                            <th width="100"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="u in ctrl.produceItems">
+                                                                          <td><span ng-bind="u.id"></span></td>
+                                            <td><span ng-bind="u.name"></span></td>
+                                            <td><span ng-bind="u.description"></span></td>
+                                            <td><span ng-bind="u.produceType.producetype"></span></td>
+                                            <td><span ng-bind="u.weight" > </span> Kgs</td>
+                                            <td><span ng-bind="u.endOfSaleDate"></span></td>
+                                            <td><span ng-bind="u.sellerName"></span></td>
+                                            <td>
+                                                <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>-->
+            <footer class="container-fluid text-center">
+                <p>Local Fruit 'N Veg Direct Copyright 2018</p>  
+                <form class="form-inline">Get deals:
+                    <input type="email" class="form-control" size="50" placeholder="Email Address">
+                    <button type="button" class="btn btn-danger">Sign Up</button>
+                </form>
+            </footer>
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-resource.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular-route.js"></script>
+
+        <script src="/js/app.js"></script>
+        <script src="/js/service/produceItem_service.js"></script>  
+        <script src="/js/controller/produceItem_controller.js"></script>
+        <script src="/js/service/produceType_service.js"></script>  
+        <script src="/js/controller/produceType_controller.js"></script>
+        <script src="/js/controller/general_controller.js"></script>
     </body>
 </html>
