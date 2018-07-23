@@ -19,7 +19,7 @@ Original displayed the whole database table of produceItems. I added code to:
 <div class="generic-container" ng-controller="ProduceItemController as ctrl">
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">Produce Item Add Form </span></div>
-        <div class="formcontainer">
+        <div class="formcontainer prjform">
             <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
                 <input type="hidden" ng-model="ctrl.produceItem.id" />
                 <div class="row">
@@ -125,7 +125,7 @@ Original displayed the whole database table of produceItems. I added code to:
                 </div>
 
                 <div class="row">
-                    <div class="form-actions floatRight">
+                    <div class="form-actions floatRight prjform">
                         <input type="submit"  value="{{!ctrl.produceItem.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
                         <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
                     </div>
@@ -164,7 +164,7 @@ Original displayed the whole database table of produceItems. I added code to:
                 <tbody>
                     <tr ng-repeat="u in ctrl.produceItems | filter: search">
                         <!--                              <td><span ng-bind="u.id"></span></td>-->
-                        <td><span ng-bind="u.name"></span></td>
+                        <td><strong><span ng-bind="u.name"></span></strong></td>
                         <td><span ng-bind="u.description"></span></td>
                         <td><span ng-bind="u.producetype.prodType"></span></td>
 <!--                                             -->

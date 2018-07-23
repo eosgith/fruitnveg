@@ -10,7 +10,7 @@ and open the template in the editor.
 <div class="generic-container" ng-controller="ProduceTypeController as typeCtrl">
     <div class="panel panel-default">
         <div class="panel-heading"><span class="lead">Produce Type Add Form </span></div>
-        <div class="formcontainer">
+        <div class="formcontainer prjform">
             <form ng-submit="typeCtrl.submit()" name="myForm" class="form-horizontal">
                 <input type="hidden" ng-model="typeCtrl.produceType.id" />
                 <div class="row">
@@ -50,7 +50,7 @@ and open the template in the editor.
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-actions floatRight">
+                    <div class="form-actions floatRight prjform">
                         <input type="submit"  value="{{!typeCtrl.produceType.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
                         <button type="button" ng-click="typeCtrl.reset()" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
                     </div>
