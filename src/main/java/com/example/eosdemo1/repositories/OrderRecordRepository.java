@@ -6,6 +6,8 @@
 package com.example.eosdemo1.repositories;
 
 import com.example.eosdemo1.models.OrderRecord;
+import com.example.eosdemo1.models.ProduceItem;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 18Jul18
  */
 public interface OrderRecordRepository extends JpaRepository<OrderRecord, Long> {
-    //List<ProduceItem> findByName(String name);
+    List<OrderRecord> findByUsername(String username);
 }

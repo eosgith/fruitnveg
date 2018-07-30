@@ -9,7 +9,11 @@ and open the template in the editor.
 
 <div class="generic-container" ng-controller="ProduceTypeController as typeCtrl">
     <div class="panel panel-default">
-        <div class="panel-heading"><span class="lead">Produce Type Add Form </span></div>
+        <!--<div class="panel-heading"><span class="lead">Produce Type Add Form </span></div>-->
+        <div class="alert alert-success"><span class="lead">Produce Type Add Form </span></div>
+        <div class="alert alert-danger" [hidden]="!error">
+	This entry not allowed. .
+        </div>
         <div class="formcontainer prjform">
             <form ng-submit="typeCtrl.submit()" name="myForm" class="form-horizontal">
                 <input type="hidden" ng-model="typeCtrl.produceType.id" />
@@ -63,7 +67,8 @@ and open the template in the editor.
     </div>
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">List of Produce Items </span>
+        <!--<div class="panel-heading"><span class="lead">List of Produce Items </span>-->
+        <div class="alert alert-success"><span class="lead">List of Produce Items </span>
             <button type="button" ng-click="typeCtrl.fetchAllProduceTypes()" class="btn btn-primary btn-sm " ">Display All</button>
             <label for="searchPType">Search for Produce Type</label>
             <input type="text" ng-model="search.prodType" id="searchPType" placeholder="Type produce type"/>

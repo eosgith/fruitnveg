@@ -1,23 +1,73 @@
 'strict'
 
-//App.controller('chooseProdTypeCtrl', function ($scope) {
+App.controller('HomeController', function ($rootScope, $scope, $http, $location, $route) {
+//    if ($rootScope.authenticated) {
+//        $location.path("/"); 
+//        $scope.loginerror = false;
+//    } else {
+//        $location.path("/login");
+//        $scope.loginerror = true; 
+//} 
+});
 
-App.controller('chooseProdTypeCtrl', ['$scope', 'ProduceType', function ($scope, ProduceType)  {
+App.controller('LoginController', function ($rootScope, $scope, $http, $location, $route) {
 
-//    $scope.chProduceTypes=[
-//        {name : "France - Mainland", desc: "some description" },
-//        {name : "Gibraltar", desc: "some description"},
-//        {name : "Malta", desc: "some description"}
-//    ];
-    
-    $scope.chProduceTypes=[];
-    $scope.chProduceTypes=ProduceType.query();
+    $rootScope.credentials = {};
 
-//    $scope.selectedCountry = $scope.chooseCountries[0].countryId;
-}]);
+    $scope.resetForm = function () {
 
+        $rootScope.credentials = null;
+    }
 
-//        {countryId : 1, name : "France - Mainland", desc: "some description" },
-//        {countryId : 2, name : "Gibraltar", desc: "some description"},
-//        {countryId : 3, name : "Malta", desc: "some description"}
+    var authenticate = function (credentials, callback) {
 
+        var headers = $rootScope.credentials ? {
+            authorization: "Basic " + btoa($rootScope.credentials.username + ":" + $rootScope.credentials.password)
+        } : {};
+        
+        console.log('in authenticate method', credentials);
+        $http.get('/user', {
+             
+            headers: headers})
+                .then(function (response) {
+                    console.log('in authenticate method', response);
+                    if (response.data.name) {
+                        $rootScope.authenticated = true;
+
+                    } else {
+                        $rootScope.authenticated = false;
+                    }
+                    callback && callback();
+                }, function () {
+                    $rootScope.authenticated = false;
+
+                    callback && callback();
+                });
+    }
+
+    authenticate();
+
+    $scope.loginUser = function () {
+        
+        authenticate($rootScope.credentials, function () {
+            if ($rootScope.authenticated) {
+                $location.path("/");
+                $scope.loginerror = false;
+                console.log('in login method authenticated:  ', $rootScope.authenticated, $scope.loginerror);
+            } else {
+                $location.path("/login");
+                $scope.loginerror = true;
+            }
+        });
+    };
+});
+
+App.controller('LogoutController', function ($rootScope, $scope, $http, $location, $route) {
+    $http.post('/logout', {}).finally(function () {
+        $rootScope.authenticated = false;
+        $location.path("/");
+        console.log('in logOUT method authenticated:  ', $rootScope.authenticated, $scope.loginerror);
+    });
+});
+
+// Ref: Soni, Ravi Kant. Full Stack AngularJS for Java Developers: Build a Full-Featured Web Application from Scratch Using AngularJS with Spring RESTful (Kindle Locations 2481-2508). Apress. Kindle Edition. 

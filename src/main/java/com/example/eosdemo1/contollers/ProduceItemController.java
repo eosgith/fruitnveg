@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author eithn
  */
 @RestController
-@RequestMapping("api/produceItems")
+@RequestMapping("fruitnvegAPI/produceItems")
 public class ProduceItemController {
     @Autowired
     private ProduceItemRepository produceItemRepository;
@@ -111,6 +111,24 @@ public class ProduceItemController {
        
         return produceItemService.getByName(name);
         
+    }
+    
+        
+        @GetMapping("/byseller")
+    public List<ProduceItem> getBySeller(@RequestParam(value = "sellername", required = false) String sellername) {
+        //    return ProduceItemStub.list();
+        System.out.println("\n**** In list ProduceItem method **** \n");
+        
+        if (sellername != null){
+            List<ProduceItem> or = produceItemService.findBySellername(sellername);
+            System.out.println("EOS my test 1: " + or + "\n");
+            return or;
+        }
+        else {
+                    
+            return produceItemService.findAllProduceItems();
+       }
+//        return orderRepository.findAll();
     }
   
     

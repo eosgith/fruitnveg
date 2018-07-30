@@ -18,7 +18,7 @@ Original displayed the whole database table of produceItems. I added code to:
 
 <div class="generic-container" ng-controller="ProduceItemController as ctrl">
     <div class="panel panel-default">
-        <div class="panel-heading"><span class="lead">Produce Item Add Form </span></div>
+        <div class=" alert alert-success"><span class="lead">Produce Item Add Form </span></div>
         <div class="formcontainer prjform">
             <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
                 <input type="hidden" ng-model="ctrl.produceItem.id" />
@@ -42,21 +42,21 @@ Original displayed the whole database table of produceItems. I added code to:
                         <!--<div class="col-md-7" ng-controller="chooseProdTypeCtrl as typectrl">-->
                         <div class="col-md-7" ng-controller="ProduceTypeController as typeCtrl">
                             <!--<input type="number" ng-model="ctrl.produceItem.weight" id="produceType" class="produceType form-control input-sm" placeholder="Enter weight of package of produce item. " required />-->
-                            
-                                <!--<select class="produceType form-control input-sm" ng-model="ctrl.produceItem.producetype" ng-options="typeItem.prodType as typeItem.prodType for typeItem in typeCtrl.produceTypes">-->
+
+                            <!--<select class="produceType form-control input-sm" ng-model="ctrl.produceItem.producetype" ng-options="typeItem.prodType as typeItem.prodType for typeItem in typeCtrl.produceTypes">-->
                                 <select class="produceType form-control input-sm" ng-model="ctrl.produceItem.producetype" ng-options="typeItem.prodType for typeItem in typeCtrl.produceTypes">
                                 <option value="">-- choose produce type --</option>
-                                </select>
-                            
-<!--                            <div class="has-error" ng-show="myForm.$dirty">
-                                <span ng-show="myForm.weight.$error.required">This is a required field</span>
-                                <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+                            </select>
 
-                            </div>-->
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+                            
+                                                        </div>-->
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label class="col-md-2 control-lable" for="address">Description</label>
@@ -80,6 +80,19 @@ Original displayed the whole database table of produceItems. I added code to:
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="itemPrice">Produce Item Price</label>
+                        <div class="col-md-7">
+                            <input type="currency" ng-model="ctrl.produceItem.itemPrice" id="itemPrice" class="itemPrice form-control input-sm" placeholder="Enter price per item. " required />
+                            <div class="has-error" ng-show="myForm.$dirty">
+                                <span ng-show="myForm.itemPrice.$error.required">This is a required field</span>
+                                <span ng-show="myForm.itemPrice.$invalid">This field is invalid </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="form-group col-md-12">
@@ -135,12 +148,12 @@ Original displayed the whole database table of produceItems. I added code to:
     </div>
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading"><span class="lead">List of Produce Items </span>
+        <div class="alert alert-success"><span class="lead">List of Produce Items </span>
             <button type="button" ng-click="ctrl.fetchAllProduceItems()" class="btn btn-primary btn-sm " ">Display All</button>
             <label for="searchPIName">Search for Produce Name</label>
             <input type="text" ng-model="search.name" id="searchPIName" placeholder="Type produce name"/>
             <label for="searchPISeller">Search for Seller Name</label>
-            <input type="text" ng-model="search.sellerName" id="searchPIName" placeholder="Type seller name"/>
+            <input type="text" ng-model="search.sellerName" id="searchPISeller" placeholder="Type seller name"/>
         </div>
         <div class="row">
 
@@ -156,6 +169,7 @@ Original displayed the whole database table of produceItems. I added code to:
                         <th>Description</th>
                         <th>Produce Type</th>
                         <th>Weight (Kgs) </th>
+                        <th>Item Price </th>
                         <th>End of Sale Date</th>
                         <th>Name of Seller</th>
                         <th width="100"></th>
@@ -167,20 +181,23 @@ Original displayed the whole database table of produceItems. I added code to:
                         <td><strong><span ng-bind="u.name"></span></strong></td>
                         <td><span ng-bind="u.description"></span></td>
                         <td><span ng-bind="u.producetype.prodType"></span></td>
-<!--                                             -->
-                        <!--<td><span ng-bind="u.producetype"></span></td>-->
                         <td><span ng-bind="u.weight" > </span> Kgs</td>
+                        <td><span ng-bind="u.itemPrice | currency :'€'" > </span></td>
                         <td><span ng-bind="u.endOfSaleDate"></span></td>
                         <td><span ng-bind="u.sellerName"></span></td>
                         <td>
-                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
+                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  
+                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
+                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-warning custom-width">Order</button>
+                            <a href="#/orderItemAdd" class="btn btn-info" role="button" ng-click="ctrl.edit(u.id)"> Home </a>
+                            <!--<a href="#/orderVA" class="btn btn-info" role="button" ng-click="ctrl.edit(u.id)"> Home </a>-->
+
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
 
 
 

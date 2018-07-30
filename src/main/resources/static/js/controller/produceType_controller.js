@@ -32,6 +32,7 @@ App.controller('ProduceTypeController', ['$scope', 'ProduceType', function ($sco
                 //self.produceTypes = [];
                 //self.produceTypes.push(response);
                 //                   console.log('Created produceType with id 3 ', self.produceTypes);
+                
                 self.fetchProduceTypeByID(response.id);
             //    self.fetchProduceTypeBySellerName(response.id);
             });

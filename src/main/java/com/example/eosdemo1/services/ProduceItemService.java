@@ -80,4 +80,10 @@ public class ProduceItemService {
         return pi;
         
     }
+    
+        public List<ProduceItem> findBySellername(String sellername) {
+        System.out.println("\n**** In findBysellername ProduceItems ProduceItemService method **** \n");
+
+        return produceItemRepository.findBySellerName(sellername);
+    }
 }

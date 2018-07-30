@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author eithn
  */
 @RestController
-@RequestMapping("api/produceTypes")
+@RequestMapping("fruitnvegAPI/produceTypes")
 public class ProduceTypeController {
 
     @Autowired

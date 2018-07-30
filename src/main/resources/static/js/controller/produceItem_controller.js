@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('ProduceItemController', ['$scope', 'ProduceItem', function ($scope, ProduceItem) {
+App.controller('ProduceItemController', ['$scope', 'ProduceItem', 'PassResource', function ($scope, ProduceItem, PassResource) {
         var self = this;
         self.produceItem = new ProduceItem();
 
@@ -25,7 +25,7 @@ App.controller('ProduceItemController', ['$scope', 'ProduceItem', function ($sco
         };
 
         self.fetchProduceItemBySellerName = function (identity) {
-            var produceItems = ProduceItem.get({sellerName: "Jack Black"}, function (response) {
+            var produceItems = ProduceItem.get({sellerName: "Jack Smith"}, function (response) {
                 console.log('Fetch produceItem with seller name 1 ');
                
 //                self.produceItems = [];
@@ -83,7 +83,9 @@ App.controller('ProduceItemController', ['$scope', 'ProduceItem', function ($sco
             for (var i = 0; i < self.produceItems.length; i++) {
                 if (self.produceItems[i].id === id) {
                     self.produceItem = angular.copy(self.produceItems[i]);
-                    console.log('Edit produceItem with id ', self.produceItem.produceType.prodType);
+                    PassResource.setValue(self.produceItem);
+                    console.log('Edit produceItem with id ', self.produceItem);
+                    console.log('Edit produceItem wfrom PassResource', PassResource.getValue());
                     break;
                 }
             }

@@ -3,7 +3,7 @@
 App.factory('ProduceItem', ['$resource', function ($resource) {
     //$resource() function returns an object of resource class
     return $resource(
-            'http://localhost:8080/api/produceItems/:id', 
+            'http://localhost:8080/fruitnvegAPI/produceItems/:id', 
             {id: '@id'},
             {
                 update: {
@@ -13,3 +13,25 @@ App.factory('ProduceItem', ['$resource', function ($resource) {
             }
     );
 }]);
+
+
+
+
+App.factory('PassResource', function() {
+
+    // private
+    var value = 0;
+
+    // public
+    return {
+      
+      getValue: function() {
+        return value;
+      },
+      
+      setValue: function(val) {
+        value = val;
+      }
+      
+    };
+  })

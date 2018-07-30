@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.eosdemo1.repositories.OrderRecordRepository;
 import com.example.eosdemo1.services.OrderRecordService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -26,7 +27,7 @@ import com.example.eosdemo1.services.OrderRecordService;
  */
 
 @RestController
-@RequestMapping("api/orderrecords")
+@RequestMapping("fruitnvegAPI/orderrecords")
 public class OrderRecordController {
 
     @Autowired
@@ -36,10 +37,19 @@ public class OrderRecordController {
     private OrderRecordService orderRecordService;
 
     @GetMapping
-    public List<OrderRecord> list() {
+    public List<OrderRecord> list(@RequestParam(value = "username", required = false) String username) {
         //    return OrderRecordStub.list();
         System.out.println("\n**** In list OrderRecord method **** \n");
-        return orderRecordService.findAllOrderRecords();
+        
+        if (username != null){
+            List<OrderRecord> or = orderRecordService.findByUsername(username);
+            System.out.println("EOS my test 1: " + or + "\n");
+            return or;
+        }
+        else {
+                    
+            return orderRecordService.findAllOrderRecords();
+       }
 //        return orderRepository.findAll();
     }
 
@@ -59,12 +69,12 @@ public class OrderRecordController {
 
     @GetMapping("/{id}")
     public OrderRecord getByID(@PathVariable("id") Long id) {
-        // return OrderRecordStub.get(id);
+        
         System.out.println("\n**** In get by id OrderRecord method. ID = " + id + " **** \n");
 
 
         OrderRecord or = orderRecordService.findById(id);
-        System.out.println("EOS my test: " + or + "\n");
+      
         return or;
 //            return orderRecordService.findById(id);
 

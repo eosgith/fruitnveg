@@ -15,4 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ProduceItemRepository extends JpaRepository<ProduceItem, Long> {
     List<ProduceItem> findByName(String name);
+    
+    List<ProduceItem> findBySellerName(String sellername);
 }

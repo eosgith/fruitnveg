@@ -12,7 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.eosdemo1.repositories.OrderRecordRepository;
-import com.example.eosdemo1.repositories.ProduceItemRepository;
+import com.example.eosdemo1.repositories.UserInfoJpaRepository;
 
 /**
  *
@@ -26,6 +26,9 @@ public class OrderRecordService {
     @Autowired
     private OrderRecordRepository orderRecordRepository;
     //private ProduceItemRepository produceItemRepository;
+    
+    @Autowired
+    private UserInfoJpaRepository userInfoJpaRepository; 
 
     public List<OrderRecord> findAllOrderRecords() {
         System.out.println("\n**** In findAllOrderRecords OrderRecordService method **** \n");
@@ -37,7 +40,16 @@ public class OrderRecordService {
 
         System.out.println("\n**** In createPI OrderRecordService method **** \n");
         //System.out.println(orderRecord);
-        return orderRecordRepository.saveAndFlush(orderRecord);
+//        UserInfo user = userInfoJpaRepository.findByUsername(orderRecord.getUsername()); 
+//        
+//        System.out.println("\nin userinfo \n" + user);
+//        
+//        orderRecord.setUserId(user);
+        
+        OrderRecord or = orderRecordRepository.saveAndFlush(orderRecord);
+        
+//        or.setUserId(null);
+        return or;
 
     }
 
@@ -45,6 +57,12 @@ public class OrderRecordService {
         System.out.println("\n**** In findByID OrderRecords OrderRecordService method **** \n");
 
         return orderRecordRepository.getOne(id);
+    }
+    
+    public List<OrderRecord> findByUsername(String username) {
+        System.out.println("\n**** In findByusername OrderRecords OrderRecordService method **** \n");
+
+        return orderRecordRepository.findByUsername(username);
     }
 
     public OrderRecord updateOrderRecord(OrderRecord orderRecord, Long id) {
@@ -79,6 +97,6 @@ public class OrderRecordService {
         
         OrderRecord or = orderRecordRepository.getOne(orderId); 
         
-        return or.getProduceitem();
+        return or.getProduceItem();
     }
 }

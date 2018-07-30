@@ -8,6 +8,7 @@ package com.example.eosdemo1.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.CreationTimestamp;
 
 /**
  *
@@ -28,28 +33,34 @@ public class OrderRecord {
     // @Id     // tell JTPA what field is primary key field 
 
     private Long id;
-    private ProduceItem produceitem;
+    private ProduceItem produceItem;
     private float itemPrice;
-    private float orderTotal;
+    private float totalOrderCost;
+    private String username;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-mm-yy")
     Date orderDate;
-//    private User userId;
+//    private UserInfo userId;
     private String userId;
     private String orderStatus;      // "pending"; "complete"
     private boolean emailSent;
+    private Date timestamp;
 
     public OrderRecord() {
+        this.orderStatus = "SUBMITTED";
+        System.out.println("in 0 param constructor for orderrec");
     }
 
-//    public OrderRecord(Long id, ProduceItem produceitem, float itemPrice, float orderTotal, User userId) {
-    public OrderRecord(Long id, ProduceItem produceitem, float itemPrice, float orderTotal, String userId) {
+//    public OrderRecord(Long id, ProduceItem produceItem, float itemPrice, float totalOrderCost, UserInfo userId) {
+    public OrderRecord(Long id, ProduceItem produceItem, float itemPrice, float totalOrderCost, String username, String userId) {
         this.id = id;
-        this.produceitem = produceitem;
+        this.produceItem = produceItem;
         this.itemPrice = itemPrice;
-        this.orderTotal = orderTotal;
-        this.userId = userId;
-        this.orderStatus = "pending";
+        this.totalOrderCost = totalOrderCost;
+        this.username = username;
+//        this.userId = userId;
+        this.orderStatus = "SUBMITTED";
         this.emailSent = false;
+
     }
 
     @Id
@@ -65,13 +76,14 @@ public class OrderRecord {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ORDEREDITEM_ID")
     // "producetype" is name of java field in java class of ProduceItem. IN @JOIN_TO field, same attribute field is refereed to using SQL file field name: "TYPE_ID". Name use in to classes must be different though referring to the same attribute field/column in ProduceItem table/class. Sucess in getting server to run.
-    
-    public ProduceItem getProduceitem() {
-        return produceitem;
+
+    public ProduceItem getProduceItem() {
+        return produceItem;
     }
 
-    public void setProduceitem(ProduceItem produceitem) {
-        this.produceitem = produceitem;
+    public void setProduceItem(ProduceItem produceItem) {
+        this.produceItem = produceItem;
+    
     }
 
     public float getItemPrice() {
@@ -82,12 +94,12 @@ public class OrderRecord {
         this.itemPrice = itemPrice;
     }
 
-    public float getOrderTotal() {
-        return orderTotal;
+    public float getTotalOrderCost() {
+        return totalOrderCost;
     }
 
-    public void setOrderTotal(float orderTotal) {
-        this.orderTotal = orderTotal;
+    public void setTotalOrderCost(float totalOrderCost) {
+        this.totalOrderCost = totalOrderCost;
     }
 
     public Date getOrderDate() {
@@ -98,20 +110,27 @@ public class OrderRecord {
         this.orderDate = orderDate;
     }
 
-//    @OneToOne
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+//        @OneToOne
 //    @JoinColumn(name="USER_ID")
-    // "USER_ID" is name of java field in java class of ProduceItem. IN @JOIN_TO field, same attribute field is refereed to using SQL file field name: "USER_ID". Name use in to classes must be different though referring to the same attribute field/column in ProduceItem table/class. Sucess in getting server to run.
-//    @JsonBackReference
-//    public User getUserId() {
+//    // "USER_ID" is name of java field in java class of ProduceItem. IN @JOIN_TO field, same attribute field is refereed to using SQL file field name: "USER_ID". Name use in to classes must be different though referring to the same attribute field/column in ProduceItem table/class. Sucess in getting server to run.
+////    @JsonBackReference
+//    public UserInfo getUserId() {
     public String getUserId() {
         return userId;
     }
-
+//
+//    public void setUserId(UserInfo userId) {
     public void setUserId(String userId) {
-//    public void setUserId(User userId) {
         this.userId = userId;
     }
-
     public String getOrderStatus() {
         return orderStatus;
     }
@@ -128,9 +147,28 @@ public class OrderRecord {
         this.emailSent = emailSent;
     }
 
+//    public UserInfo getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(UserInfo userId) {
+//        this.userId = userId;
+//    }
+
+    @Column(name = "timestamp")
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
-        return "OrderRecord{" + "id=" + id + ", produceitem=" + produceitem + ", itemPrice=" + itemPrice + ", orderTotal=" + orderTotal + ", orderDate=" + orderDate + ", userId=" + userId + ", orderStatus=" + orderStatus + ", emailSent=" + emailSent + '}';
+        return "OrderRecord{" + "id=" + id + ", produceItem=" + produceItem + ", itemPrice=" + itemPrice + ", totalOrderCost=" + totalOrderCost + ", username=" + username + ", orderDate=" + orderDate + ", userId=" + userId + ", orderStatus=" + orderStatus + ", emailSent=" + emailSent + ", timestamp=" + timestamp + '}';
     }
 
 }

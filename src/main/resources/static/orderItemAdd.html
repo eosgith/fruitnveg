@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<!--References/Own Work
+Overall structure of html layout and getting table data from a database through a controller was got from this website:
+I modified this to display my own fields and obtain my own data, including additional fields and input fields.
+Original displayed the whole database table of produceItems. I added code to:
+- just display newly added item/modified item on its own after add/update was done.
+- add button, to display all again.
+- add input field for user to enter text for Name field that will just display items out of complete returned array containing that text.
+- add input field for user to enter text for Seller's Name that will just display items out of complete returned array containing that text.
+- add into panel for adding/modifying a produceItem, an drop down box that shows   'prodType' field from database table Produce Type, 
+  for user selection that will get stored in produceItem object saved to database-->
+
+<div class="generic-container" ng-controller="OrderRecordController as ctrl">
+    <div class="panel panel-default">
+        <div class=" alert alert-success"><span class="lead">Order Creation and Submission  </span></div>
+        <div class="formcontainer prjform">
+            <form ng-submit="ctrl.submit()" name="myForm" class="form-horizontal">
+                <!--<input type="hidden" ng-model="ctrl.orderRecord.id" />-->
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="orderNo">Order Number</label>
+                        <div class="col-md-7">
+                            <input type="text" readonly ng-model="ctrl.orderRecord.id" id="orderNo" class="orderNo form-control input-sm" />
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.uname.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.uname.$error.minlength">Minimum length required is 3</span>
+                                                            <span ng-show="myForm.uname.$invalid">This field is invalid </span>
+                                                        </div>-->
+                        </div>
+                    </div>
+                </div>                
+
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="uname">Produce Name</label>
+                        <div class="col-md-7">
+                            <input type="text" readonly ng-model="ctrl.orderRecord.produceItem.name" id="uname" class="produceItemname form-control input-sm" />
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.uname.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.uname.$error.minlength">Minimum length required is 3</span>
+                                                            <span ng-show="myForm.uname.$invalid">This field is invalid </span>
+                                                        </div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12" >
+                        <label class="col-md-2 control-lable" for="produceType">Produce Type</label>
+                        <!--<div class="col-md-7" ng-controller="chooseProdTypeCtrl as typectrl">-->
+                        <!--<div class="col-md-7" ng-controller="ProduceTypeController as typeCtrl">-->
+                        <div class="col-md-7">
+                            <input  ng-model="ctrl.orderRecord.produceItem.producetype.prodType" id="produceType" class="produceType form-control input-sm"  readonly />
+
+                            <!--                                <select class="produceType form-control input-sm" ng-model="ctrl.produceItem.producetype" ng-options="typeItem.prodType as typeItem.prodType for typeItem in typeCtrl.produceTypes">
+                                                            <select class="produceType form-control input-sm" ng-model="ctrl.produceItem.producetype" ng-options="typeItem.prodType for typeItem in typeCtrl.produceTypes">
+                                                            <option value="">-- choose produce type --</option>
+                                                            </select>
+                            -->
+                            <div class="has-error" ng-show="myForm.$dirty">
+                                <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="address">Description</label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="ctrl.orderRecord.produceItem.description" id="description" class="form-control input-sm"  readonly/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="weight">Weight (kgs)</label>
+                        <div class="col-md-7">
+                            <input type="number" ng-model="ctrl.orderRecord.produceItem.weight" id="weight" class="weightCls form-control input-sm"  readonly />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="unitprice">Price per item </label>
+                        <div class="col-md-7">
+                            <input type="currency:€" ng-model="ctrl.orderRecord.produceItem.itemPrice | currency :'€'" id="unitprice" class="unitprice form-control input-sm" readonly />
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!--                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label class="col-md-2 control-lable" for="eofsdate">End of Sale Date </label>
+                                        <div class="col-md-7">
+                                            <input type="date" ng-model="ctrl.produceItem.endOfSaleDate" id="eofsdate" class="eofsdate form-control input-sm" placeholder="Enter date for end of sale of produce item. " required ng-date />
+                                            <div class="has-error" ng-show="myForm.$dirty">
+                                                <span ng-show="myForm.eofsdate.$error.required">This is a required field</span>
+                                                <span ng-show="myForm.eofsdate.$error.date">This is a required field</span>
+                                                <span ng-show="myForm.eofsdate.$invalid">This field is invalid </span>
+                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="sname">Name of Seller</label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="ctrl.orderRecord.produceItem.sellerName" id="sname" class="produceItemSellerName form-control input-sm" readonly/>
+                            <div class="has-error" ng-show="myForm.$dirty">
+                                <span ng-show="myForm.sname.$error.required">This is a required field</span>
+                                <span ng-show="myForm.sname.$error.minlength">Minimum length required is 3</span>
+                                <span ng-show="myForm.sname.$invalid">This field is invalid </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="email">Seller's Email</label>
+                        <div class="col-md-7">
+                            <input type="email" ng-model="ctrl.orderRecord.produceItem.email" id="email" class="email form-control input-sm" readonly/>
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.email.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.email.$invalid">This field is invalid </span>
+                                                        </div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="totalcost"><strong>TOTAL COST </strong></label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="ctrl.orderRecord.totalOrderCost | currency :'€': true" id="totalcost" class="totalcost form-control input-sm"  readonly />
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+                            
+                                                        </div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="timestamp"><strong>Order Date and Time </strong></label>
+                        <div class="col-md-7">
+                            <!--{{!ctrl.orderRecord.id ? 'Submit Order' : 'Update'}}-->
+                            <!--<input type="text" ng-model="ctrl.orderRecord.timestamp ?  |date:'medium' :  :| ''" id="timestamp" class="timestamp form-control input-sm" readonly />-->
+                            <input type="text" ng-model="ctrl.orderRecord.timestamp | date:'medium'" id="timestamp" class="timestamp form-control input-sm" readonly />
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+                            
+                                                        </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="orderStatus"><strong>Order Status </strong></label>
+                        <div class="col-md-7">
+                            <input type="text" ng-model="ctrl.orderRecord.orderStatus" id="orderStatus" class="orderStatus form-control input-sm" readonly />
+                            <!--                            <div class="has-error" ng-show="myForm.$dirty">
+                                                            <span ng-show="myForm.weight.$error.required">This is a required field</span>
+                                                            <span ng-show="myForm.weight.$invalid">This field is invalid </span>
+                            
+                                                        </div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-actions floatRight prjform">
+                        <!--<input type="submit"  value="{{!ctrl.orderRecord.id ? 'Submit Order' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">-->
+                        <input type="submit"  value="Submit Order" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid">
+                        <!--<button type="button" ng-click="ctrl.submit()" class="btn btn-warning btn-sm" >Reset Form</button>-->
+                        <button type="button" class="btn btn-warning btn-sm" >Reset Form</button>
+                    </div>
+                    <!--                    <div class="form-actions floatRight prjform ng-controller="orderRecordController as orderCtrl">
+                     
+                                            <button type="button" ng-click="orderCtrl.add()" class="btn btn-warning btn-sm" "">Submit Order</button>
+                                        </div>-->
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="alert alert-success"><span class="lead">List of Produce Items </span>
+            <button type="button" ng-click="ctrl.fetchAllProduceItems()" class="btn btn-primary btn-sm " ">Display All</button>
+            <label for="searchPIName">Search for Produce Name</label>
+            <input type="text" ng-model="search.name" id="searchPIName" placeholder="Type produce name"/>
+            <label for="searchPISeller">Search for Seller Name</label>
+            <input type="text" ng-model="search.sellerName" id="searchPISeller" placeholder="Type seller name"/>
+        </div>
+        <div class="row">
+
+        </div>
+
+        <div class="tablecontainer">
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <!--                              <th>ID.</th>-->
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Produce Type</th>
+                        <th>Weight (Kgs) </th>
+                        <th>End of Sale Date</th>
+                        <th>Name of Seller</th>
+                        <th width="100"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="u in ctrl.produceItems | filter: search">
+                        <td><strong><span ng-bind="u.name"></span></strong></td>
+                        <td><span ng-bind="u.description"></span></td>
+                        <td><span ng-bind="u.producetype.prodType"></span></td>
+                        <td><span ng-bind="u.weight" > </span> Kgs</td>
+                        <td><span ng-bind="u.endOfSaleDate"></span></td>
+                        <td><span ng-bind="u.sellerName"></span></td>
+                        <td>
+                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  
+                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
+                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-warning custom-width">Order</button>
+                            <a href="#/" class="btn btn-info" role="button"> Home </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
