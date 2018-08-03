@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
 
 
 <div class="generic-container" ng-controller="ProduceTypeController as typeCtrl">
     <div class="panel panel-default">
-        <!--<div class="panel-heading"><span class="lead">Produce Type Add Form </span></div>-->
         <div class="alert alert-success"><span class="lead">Produce Type Add Form </span></div>
-        <div class="alert alert-danger" [hidden]="!error">
+<!--        <div class="alert alert-danger" [hidden]="!error">
 	This entry not allowed. .
-        </div>
+        </div>-->
         <div class="formcontainer prjform">
             <form ng-submit="typeCtrl.submit()" name="myForm" class="form-horizontal">
                 <input type="hidden" ng-model="typeCtrl.produceType.id" />
@@ -42,14 +34,9 @@ and open the template in the editor.
 
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label class="col-md-2 control-lable" for="weight">Photo Link</label>
+                        <label class="col-md-2 control-lable" for="photoLnk">Photo Link</label>
                         <div class="col-md-7">
-                            <input type="number" ng-model="typeCtrl.produceType.photolink" id="weight" class="weightCls form-control input-sm" placeholder="" />
-                            <!--                        <div class="has-error" ng-show="myForm.$dirty">
-                                                        <span ng-show="myForm.weight.$error.required">This is a required field</span>
-                                                        <span ng-show="myForm.weight.$invalid">This field is invalid </span>
-                            
-                                                    </div>-->
+                            <input type="text" ng-model="typeCtrl.produceType.photoLink" id="photoLnk" class="photoLnk form-control input-sm" placeholder="" />
                         </div>
                     </div>
                 </div>
@@ -67,35 +54,33 @@ and open the template in the editor.
     </div>
     <div class="panel panel-default">
         <!-- Default panel contents -->
-        <!--<div class="panel-heading"><span class="lead">List of Produce Items </span>-->
-        <div class="alert alert-success"><span class="lead">List of Produce Items </span>
+         <div class="alert alert-success"><span class="lead">List of Produce Items </span>
             <button type="button" ng-click="typeCtrl.fetchAllProduceTypes()" class="btn btn-primary btn-sm " ">Display All</button>
             <label for="searchPType">Search for Produce Type</label>
             <input type="text" ng-model="search.prodType" id="searchPType" placeholder="Type produce type"/>
         </div>
-        <div class="row">
-
-        </div>
-
         <div class="tablecontainer">
 
-            <table class="table table-hover table-striped">
+            <table class="table table-hover table-striped table-sm">
                 <thead>
                     <tr>
-                        <!--                              <th>ID.</th>-->
                         <th>Produce Type</th>
                         <th>Description</th>
+                        <th>Photo Link (URL)</th>
+                        <th>Photo </th>
                         <th width="100"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="u in typeCtrl.produceTypes | filter: search">
-                        <!--                              <td><span ng-bind="u.id"></span></td>-->
-
+                    <tr ng-repeat="u in typeCtrl.produceTypes | filter: search | orderBy : 'prodType'">
                         <td><span ng-bind="u.prodType"></span></td>
                         <td><span ng-bind="u.description"></span></td>
+                        <td><span ng-bind="u.photoLink"></span></td>
+                        <td><img ng-src={{u.photoLink}} class="img-rounded" width="100" height="80" alt='fruitvegphoto'></img></td>
+                        <!--<td><img src="/images/gardenvegplot2.jpg" class="img-rounded img-thumbnail " width="100" height="100"/></td>-->
                         <td>
-                            <button type="button" ng-click="typeCtrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="typeCtrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
+                            <button type="button" ng-click="typeCtrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  
+                            <button type="button" ng-click="typeCtrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
                         </td>
                     </tr>
                 </tbody>

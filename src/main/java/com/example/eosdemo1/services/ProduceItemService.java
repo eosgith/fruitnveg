@@ -7,6 +7,7 @@ package com.example.eosdemo1.services;
 
 import com.example.eosdemo1.models.ProduceItem;
 import com.example.eosdemo1.repositories.ProduceItemRepository;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class ProduceItemService {
     public ProduceItem updateProduceItem(ProduceItem produceItem, Long id) {
 
         System.out.println("\n**** In updateProduceItem ProduceItemService method **** \n");
-        
+
         System.out.println(produceItem);
         ProduceItem existingProduceItem = produceItemRepository.getOne(id);
         BeanUtils.copyProperties(produceItem, existingProduceItem);
@@ -53,14 +54,14 @@ public class ProduceItemService {
         return produceItemRepository.saveAndFlush(existingProduceItem);
 
     }
-    
+
     public void delete(ProduceItem produceItem) {
 
         System.out.println("\n**** In delete ProduceItemService method **** \n");
         //System.out.println(produceItem);
         produceItemRepository.delete(produceItem);
     }
-    
+
     public ProduceItem deleteById(Long id) {
 
         System.out.println("\n**** In delete ProduceItemService method **** \n");
@@ -69,21 +70,39 @@ public class ProduceItemService {
         produceItemRepository.delete(existingProduceItem);
         return existingProduceItem;
     }
-    
-            // get method to get 1 particular ProduceItem using request parameter of name
-        // /api/produceItems/byname?name=John Smith
-  
-    public List<ProduceItem> getByName(String name){
+
+    // get method to get 1 particular ProduceItem using request parameter of name
+    // /api/produceItems/byname?name=John Smith
+    public List<ProduceItem> getByName(String name) {
         System.out.println("\n**** In get by id produceItem method **** \n");
         List<ProduceItem> pi = produceItemRepository.findByName(name);
         System.out.println("produceItem returned " + pi);
         return pi;
-        
+
     }
-    
-        public List<ProduceItem> findBySellername(String sellername) {
+
+    public List<ProduceItem> findBySellername(String sellername) {
         System.out.println("\n**** In findBysellername ProduceItems ProduceItemService method **** \n");
 
         return produceItemRepository.findBySellerName(sellername);
+    }
+
+    //    query.setMaxResults(1).getResultList();
+    public ProduceItem findLast() {
+        System.out.println("\n**** In findLast ProduceItems ProduceItemService method **** \n");
+
+        long count = produceItemRepository.count();
+
+        return produceItemRepository.getOne(count);
+    }
+
+    public List<ProduceItem> findValidEndOfSaleDate() {
+        System.out.println("\n**** In findLast ProduceItems ProduceItemService method **** \n");
+
+        Date todaysDate = new Date();
+
+        System.out.println("todaysDate: " + todaysDate);
+        
+        return produceItemRepository.findByEndOfSaleDateAfter(todaysDate);
     }
 }

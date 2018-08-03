@@ -37,11 +37,11 @@ public class OrderRecord {
     private float itemPrice;
     private float totalOrderCost;
     private String username;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-mm-yy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "en_GB")
     Date orderDate;
 //    private UserInfo userId;
     private String userId;
-    private String orderStatus;      // "pending"; "complete"
+    private String orderStatus;      // "submitted"; "complete"
     private boolean emailSent;
     private Date timestamp;
 

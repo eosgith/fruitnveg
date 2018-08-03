@@ -6,6 +6,7 @@
 package com.example.eosdemo1.contollers;
 
 import com.example.eosdemo1.models.OrderRecord;
+import com.example.eosdemo1.models.ProduceItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -111,4 +112,11 @@ public class OrderRecordController {
         // orderRepository.delete(order);
     }
 
+//    @RequestMapping("/maxordereditem")
+//    public ProduceItem getMaxOrdered(){
+//        System.out.println("\n**** In getLast produceItem method **** \n");
+//               
+//        return orderRecordService.getItemOrderedMax() ;
+//        
+//    }
 }

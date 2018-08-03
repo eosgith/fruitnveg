@@ -3,10 +3,31 @@
         <span class="lead "> Welcome to Local Fruit 'N Veg Direct  </span> </div> 
         <div class="panel-body "> 
             <div class="alert alert-info"> 
-                <ul> <li> Please click on <strong>Register New User</strong> to register a new user. </li> 
-                    <li> Please click on <strong>List All Users</strong> to get all users. </li> 
+                <ul> <li> Please click on <a href="#/produceItemVA" ><strong>Add New Produce Item</strong></a> to add new fruit n veg package for sale. </li> 
+                    <li> Please click on <a href="#/produceItemView" ><strong>Order Produce Item</strong></a> to order a fruit n veg package direct from grower. </li> 
                 </ul>
             </div>
         </div>
 </div>
-//
+
+<div class="row">
+  <!--<div class="col-sm-6 col-md-4 ">-->
+  <div class="col-sm-6 col-md-3">
+      
+    <div ngHide ={{errorInd}} class="thumbnail alert alert-warning prjform" >
+      <img ng-src={{homeCtrl.produceItem.producetype.photoLink}} class="img-rounded" width="200" height="160" alt='fruitvegphoto'></img>
+      <div class="caption">
+        <h3 class="orderStatus">Latest Addition! <span ng-bind="homeCtrl.produceItem.name"></span></h3>
+        <p><span ng-bind="homeCtrl.produceItem.description"></span></p>
+        <p><span ng-bind="homeCtrl.produceItem.itemPrice | currency :'€'" > </span></p>
+        <p>END OF SALE: <span ng-bind="homeCtrl.produceItem.endOfSaleDate"></span></p>
+        <p>Local Seller - <span ng-bind="homeCtrl.produceItem.sellerName"></span></p>
+        <p><a href="#/orderItemAdd" class="btn btn-warning" role="button" ng-click="homeCtrl.order()"> Order </a>
+        <a href="#/produceItemView" class="btn btn-primary" role="button">View List</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

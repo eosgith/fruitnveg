@@ -31,7 +31,8 @@ public class ProduceItem {
 //    private String producetype;
     private Integer quantity;
     private Double weight;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-mm-yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-mm-yy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd", locale = "en_GB")
     private Date endOfSaleDate;
     private float itemPrice;
     private String sellerName;

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -159,9 +159,9 @@ Original displayed the whole database table of produceItems. I added code to:
 
         </div>
 
-        <div class="tablecontainer">
+        <div class="tablecontainer table-responsive">
 
-            <table class="table table-hover table-striped">
+            <table class="table table-hover table-striped table-sm">
                 <thead>
                     <tr>
                         <!--                              <th>ID.</th>-->
@@ -172,6 +172,7 @@ Original displayed the whole database table of produceItems. I added code to:
                         <th>Item Price </th>
                         <th>End of Sale Date</th>
                         <th>Name of Seller</th>
+                        <th>Stock Photo</th>
                         <th width="100"></th>
                     </tr>
                 </thead>
@@ -185,11 +186,12 @@ Original displayed the whole database table of produceItems. I added code to:
                         <td><span ng-bind="u.itemPrice | currency :'€'" > </span></td>
                         <td><span ng-bind="u.endOfSaleDate"></span></td>
                         <td><span ng-bind="u.sellerName"></span></td>
+                        <td><img ng-src={{u.producetype.photoLink}} class="img-rounded" width="100" height="80" alt='fruitvegphoto'></img></td>
                         <td>
-                            <button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  
+                            <button type="button" ng-click="ctrl.edit($index)" class="btn btn-success custom-width">Edit</button>  
                             <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
-                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-warning custom-width">Order</button>
-                            <a href="#/orderItemAdd" class="btn btn-info" role="button" ng-click="ctrl.edit(u.id)"> Home </a>
+<!--                            <button type="button" ng-click="ctrl.remove(u.id)" class="btn btn-warning custom-width">Order</button>-->
+                            <a href="#/orderItemAdd" class="btn btn-warning" role="button" ng-click="ctrl.order($index)"> Order </a>
                             <!--<a href="#/orderVA" class="btn btn-info" role="button" ng-click="ctrl.edit(u.id)"> Home </a>-->
 
                         </td>

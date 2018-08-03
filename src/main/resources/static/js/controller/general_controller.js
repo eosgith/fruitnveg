@@ -1,14 +1,56 @@
 'strict'
 
-App.controller('HomeController', function ($rootScope, $scope, $http, $location, $route) {
+//App.controller('HomeController',['$scope', 'ProduceItem', function ($rootScope, $scope, $http, $location, $route, ProduceItem) {
+App.controller('HomeController', ['$scope', 'ProduceItem', 'PassResource',function ($scope, ProduceItem, PassResource) {
 //    if ($rootScope.authenticated) {
 //        $location.path("/"); 
 //        $scope.loginerror = false;
 //    } else {
 //        $location.path("/login");
 //        $scope.loginerror = true; 
-//} 
-});
+//        
+//       
+        var self = this;
+        self.produceItem = new ProduceItem();
+        //= new ProduceItem();
+
+        self.errorInd = false;
+
+        self.fetchLastAddedItem = function () {
+            console.log('Fetch last added item');
+            self.produceItem = ProduceItem.get({id: "lastAdded"}, function (response) {
+
+
+                console.log('Fetch last added produce item ', self.produceItem);
+                console.log('Fetch last added item:  ', response);
+
+//                self.produceItems = [];
+
+                // add response produce item to arrary for display of just 1 item
+//                self.produceItems.push(response);
+//                console.log('Fetch produceItem with seller name 3 ', self.produceItems);
+            }
+                    
+            ,function(){
+                console.log('No produce item returned');
+                self.errorInd = true;}
+            )
+           
+        };
+
+        self.fetchLastAddedItem();
+
+        self.order = function () {
+            PassResource.setValue(self.produceItem);
+            console.log('Edit produceItem with id ', self.produceItem);
+            console.log('Edit produceItem wfrom PassResource', PassResource.getValue());
+//                    break;
+//                }
+//            }
+        };
+
+
+    }]);
 
 App.controller('LoginController', function ($rootScope, $scope, $http, $location, $route) {
 
@@ -24,10 +66,10 @@ App.controller('LoginController', function ($rootScope, $scope, $http, $location
         var headers = $rootScope.credentials ? {
             authorization: "Basic " + btoa($rootScope.credentials.username + ":" + $rootScope.credentials.password)
         } : {};
-        
+
         console.log('in authenticate method', credentials);
         $http.get('/user', {
-             
+
             headers: headers})
                 .then(function (response) {
                     console.log('in authenticate method', response);
@@ -48,7 +90,7 @@ App.controller('LoginController', function ($rootScope, $scope, $http, $location
     authenticate();
 
     $scope.loginUser = function () {
-        
+
         authenticate($rootScope.credentials, function () {
             if ($rootScope.authenticated) {
                 $location.path("/");

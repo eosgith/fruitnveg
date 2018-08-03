@@ -19,11 +19,11 @@ App.config(['$routeProvider', function ($routeProvider) {
                 })
                 .when('/orderVA', {
                         templateUrl: 'orderView.html',
-                        controller: "OrderRecordController as orderRecCtrl"
+                        controller: "OrderRecordViewController as orderRecCtrl"
                 })
                 .when('/orderItemAdd', {
                         templateUrl: 'orderItemAdd.html',
-                        controller: "OrderRecordController as orderRec2Ctrl"
+                        controller: "OrderRecordAddController as orderRec2Ctrl"
                 })
                 .when('/login', {
                         templateUrl: 'login.html',
@@ -51,9 +51,9 @@ App.config(['$locationProvider', function ($locationProvider) {
 
 // Ref: Below: Soni, Ravi Kant. Full Stack AngularJS for Java Developers: Build a Full-Featured Web Application from Scratch Using AngularJS with Spring RESTful (Kindle Locations 2434-2436). Apress. Kindle Edition. 
 
-App.config(['$httpProvider', function($httpProvider) {
-        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-    }]);
+//App.config(['$httpProvider', function($httpProvider) {
+//        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+//    }]);
 
 //App.factory('AuthInterceptor',  ['$rootScope', function ($rootScope) {
 //        return {
@@ -61,11 +61,12 @@ App.config(['$httpProvider', function($httpProvider) {
 //            'request': function (config) {
 //               config.headers = config.headers || {};
 //  ////            var encodedString = btoa("jill:password");
-//  //                var encodedString = btoa("user:password");
-//  ////            var encodedString = btoa("${login.name}:${login.password}");
+//                  var encodedString = btoa("user:password");
+//  //              var encodedString = btoa("${login.name}:${login.password}");
 //  //
-// var encodedString = btoa($rootScope.credentials.username+ ":" +$rootScope.credentials.password);
+//// var encodedString = btoa($rootScope.credentials.username+ ":" +$rootScope.credentials.password);
 //                console.log('in factory authi', encodedString);
+//                console.log('in factory authi', $login.name + ":" +$login.password);
 //                config.headers.Authorization = 'Basic ' + encodedString;
 //                return config;
 //            }

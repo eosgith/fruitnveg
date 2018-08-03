@@ -2,11 +2,12 @@
 .navbar {
     margin-bottom: 8px;
     border-radius: 0;
+    margin-top: 0;
 }
 
-/* Remove the jumbotron's default bottom margin */ 
-.jumbotron {
-    margin-bottom: 0;
+/* Remove  default bottom margin */ 
+.headerDiv {
+    margin: 0;
 }
 
 /* Add a gray background color and some padding to the footer */
@@ -17,4 +18,8 @@ footer, header{
 
 .prjform{
     padding:15px;
+}
+
+.orderStatus{
+    color:red;
 }

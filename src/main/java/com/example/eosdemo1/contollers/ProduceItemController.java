@@ -130,6 +130,22 @@ public class ProduceItemController {
        }
 //        return orderRepository.findAll();
     }
-  
+    
+    
+    @RequestMapping("/lastAdded")
+    public ProduceItem getLast(){
+        System.out.println("\n**** In getLast produceItem method **** \n");
+               
+        return produceItemService.findLast();
+        
+    }
+    
+    @RequestMapping("/stillforsale")
+    public List<ProduceItem> getStillForSale(){
+        System.out.println("\n**** In getLast produceItem method **** \n");
+               
+        return produceItemService.findValidEndOfSaleDate();
+        
+    }
     
 }

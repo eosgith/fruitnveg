@@ -6,6 +6,8 @@ App.controller('ProduceItemController', ['$scope', 'ProduceItem', 'PassResource'
 
         self.produceItems = [];
 
+        self.errorInd = false;
+        
         self.fetchAllProduceItems = function () {
             self.produceItems = ProduceItem.query();
         };
@@ -23,9 +25,11 @@ App.controller('ProduceItemController', ['$scope', 'ProduceItem', 'PassResource'
             })
 
         };
+        
+        
 
-        self.fetchProduceItemBySellerName = function (identity) {
-            var produceItems = ProduceItem.get({sellerName: "Jack Smith"}, function (response) {
+        self.fetchLastAddedItem = function () {
+            self.produceItem = ProduceItem.get({id: "lastAdded"}, function (response) {
                 console.log('Fetch produceItem with seller name 1 ');
                
 //                self.produceItems = [];
@@ -33,7 +37,11 @@ App.controller('ProduceItemController', ['$scope', 'ProduceItem', 'PassResource'
                 // add response produce item to arrary for display of just 1 item
 //                self.produceItems.push(response);
                 console.log('Fetch produceItem with seller name 3 ', self.produceItems);
-            })
+            }
+                    ,function(){
+        console.log('No produce item returned');
+        self.errorInd = true;
+    })
 
         };
 
@@ -78,17 +86,30 @@ App.controller('ProduceItemController', ['$scope', 'ProduceItem', 'PassResource'
             self.reset();
         };
 
-        self.edit = function (id) {
-            console.log('id to be edited', id);
-            for (var i = 0; i < self.produceItems.length; i++) {
-                if (self.produceItems[i].id === id) {
-                    self.produceItem = angular.copy(self.produceItems[i]);
-                    PassResource.setValue(self.produceItem);
+        self.edit = function (index) {
+            console.log('id to be edited', index);
+//            for (var i = 0; i < self.produceItems.length; i++) {
+//                if (self.produceItems[i].id === id) {
+
+                    self.produceItem = angular.copy(self.produceItems[index]);
+                   
+//                    break;
+//                }
+//            }
+        };
+        
+        self.order = function (index) {
+            console.log('id to be edited', index);
+//            for (var i = 0; i < self.produceItems.length; i++) {
+//                if (self.produceItems[i].id === id) {
+                    self.produceItem = angular.copy(self.produceItems[index]);
+//                    PassResource.setValue(self.produceItem);
+                    PassResource.setValue(self.produceItems[index]);
                     console.log('Edit produceItem with id ', self.produceItem);
                     console.log('Edit produceItem wfrom PassResource', PassResource.getValue());
-                    break;
-                }
-            }
+//                    break;
+//                }
+//            }
         };
 
         self.remove = function (id) {

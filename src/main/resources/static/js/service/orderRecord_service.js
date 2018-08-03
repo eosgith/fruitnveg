@@ -17,13 +17,7 @@ App.factory('OrderRecord', ['$resource', function ($resource) {
 App.factory('UserGet', ['$resource', function ($resource) {
     //$resource() function returns an object of resource class
     return $resource(
-            'http://localhost:8080/user/:id', 
-            {id: '@id'},
-            {
-                update: {
-                      method: 'PUT' // To send the HTTP Put request when calling this custom update method.
-                }
-                 
-            }
+            'http://localhost:8080/user', 
+           
     );
 }]);

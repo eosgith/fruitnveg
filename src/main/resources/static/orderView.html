@@ -11,9 +11,9 @@ Original displayed the whole database table of orderRecords. I added code to:
 - add into panel for adding/modifying a orderRecord, an drop down box that shows   'prodType' field from database table Produce Type, 
   for user selection that will get stored in orderRecord object saved to database-->
 
-<div class="generic-container" ng-controller="OrderRecordController as orderRecordCtrl">
+<div class="generic-container" ng-controller="OrderRecordViewController as orderRecordCtrl">
     <div class="panel panel-default">
-        <div class=" alert alert-success"><span class="lead">Produce Item Add Form </span></div>
+        <div class=" alert alert-success"><span class="lead">List of Orders </span></div>
         <div class="formcontainer prjform">
             <form ng-submit="orderRecordCtrl.submit()" name="myForm" class="form-horizontal">
 <!--                <input type="hidden" ng-model="orderRecordCtrl.orderRecord.id" />
@@ -127,8 +127,10 @@ Original displayed the whole database table of orderRecords. I added code to:
             <button type="button" ng-click="orderRecordCtrl.fetchAllOrderRecords()" class="btn btn-primary btn-sm " ">Display All</button>
             <label for="searchPIName">Search for Username</label>
             <input type="text" ng-model="search.username" id="searchPIName" placeholder="Type username"/>
-            <label for="searchPISeller">Search for Order ID</label>
-            <input type="text" ng-model="search.id" id="searchPISeller" placeholder="Type order ID"/>
+            <label for="searchPIOrder">Search for Order ID</label>
+            <input type="text" ng-model="search.id" id="searchPIOrder" placeholder="Type order ID"/>
+            <label for="searchPISeller">Search by Seller</label>
+            <input type="text" ng-model="search.produceItem.sellerName" id="searchPISeller" placeholder="Type seller's name"/>
         </div>
         <div class="row">
 
@@ -145,8 +147,11 @@ Original displayed the whole database table of orderRecords. I added code to:
                         <th>Produce Description</th>
                         <th>Produce Type</th>
                         <th>Produce Weight (Kgs) </th>
-                        <th>Username</th>
+                        <th>Buyer's Username</th>
                         <th>Name of Seller</th>
+                        <th>Email of Seller</th>
+                        <th>Total Cost of Order</th>
+                        <th>Date Order Made</th>
                         <th width="100"></th>
                     </tr>
                 </thead>
@@ -154,14 +159,17 @@ Original displayed the whole database table of orderRecords. I added code to:
                     <tr ng-repeat="u in orderRecordCtrl.orderRecords | filter: search">
                         <!--                              <td><span ng-bind="u.id"></span></td>-->
                         <td><strong><span ng-bind="u.id"></span></strong></td>
-                        <td><strong><span ng-bind="u.produceitem.name"></span></strong></td>
-                        <td><span ng-bind="u.produceitem.description"></span></td>
-                        <td><span ng-bind="u.producetype.prodType"></span></td>
+                        <td><strong><span ng-bind="u.produceItem.name"></span></strong></td>
+                        <td><span ng-bind="u.produceItem.description"></span></td>
+                        <td><span ng-bind="u.produceItem.producetype.prodType"></span></td>
 <!--                                             -->
                         <!--<td><span ng-bind="u.producetype"></span></td>-->
-                        <td><span ng-bind="u.producetype.weight" > </span> Kgs</td>
+                        <td><span ng-bind="u.produceItem.weight" > </span> Kgs</td>
                         <td><span ng-bind="u.username"></span></td>
-                        <td><span ng-bind="u.produceitem.sellerName"></span></td>
+                        <td><span ng-bind="u.produceItem.sellerName"></span></td>
+                        <td><span ng-bind="u.produceItem.email"></span></td>
+                        <td><span ng-bind="u.totalOrderCost | currency :'€'"></span></td>
+                        <td><span ng-bind="u.timestamp | date "></span></td>
                         <td>
                             <button type="button" ng-click="orderRecordCtrl.edit(u.id)" class="btn btn-success custom-width">Edit</button>  <button type="button" ng-click="orderRecordCtrl.remove(u.id)" class="btn btn-danger custom-width">Remove</button>
                         </td>

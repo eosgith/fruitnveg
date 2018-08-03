@@ -1,6 +1,6 @@
 'use strict';
 
-App.controller('OrderRecordController', ['$scope', 'OrderRecord', 'PassResource', function ($scope, OrderRecord, PassResource) {
+App.controller('OrderRecordAddController', ['$scope', 'OrderRecord', 'PassResource', function ($scope, OrderRecord, PassResource) {
 //App.controller('OrderRecordController', ['$scope', 'OrderRecord',  function ($scope, OrderRecord) {
         var self = this;
         
@@ -30,18 +30,19 @@ App.controller('OrderRecordController', ['$scope', 'OrderRecord', 'PassResource'
         };
         
       self.findAuthorisedUser = function () {
-            self.user = OrderRecord.UserGet();
-            if (response.data.name) {
-                self.orderRecord.status = "true";
-                $rootScope.authenticated = true;
+            self.user = OrderRecord.get(function (response) {
+                if (response.data.name) {
+                    self.orderRecord.status = "true";
+                    $rootScope.authenticated = true;
 
-            } else {
-                self.orderRecord.status = "false";
-                $rootScope.authenticated = false;
-            }
-        };
+                } else {
+                    self.orderRecord.status = "false";
+                    $rootScope.authenticated = false;
+                }
+        });
+    };
 
-//        self.findAuthorisedUser();
+//         self.findAuthorisedUser();
         
         self.fetchOrderRecordByID = function (identity) {
             var orderRecord = OrderRecord.get({id: identity}, function (response) {
